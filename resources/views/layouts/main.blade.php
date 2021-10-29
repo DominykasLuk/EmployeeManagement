@@ -9,16 +9,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+          crossorigin="anonymous" />
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{asset('css/sb-admin.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/sb-admin.min.css') }}" rel="stylesheet">
 
 </head>
 
@@ -29,7 +31,6 @@
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
             <a class="nav-link" href="index.html">
@@ -39,10 +40,9 @@
 
         <!-- Divider -->
         <hr class="sidebar-divider">
-
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="/employees">
                 <span>Employee Management</span></a>
         </li>
 
@@ -58,31 +58,28 @@
             </a>
             <div id="collapseSystem" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="buttons.html">Country</a>
-                    <a class="collapse-item" href="buttons.html">State</a>
-                    <a class="collapse-item" href="buttons.html">City</a>
-                    <a class="collapse-item" href="buttons.html">Department</a>
+                    <a class="collapse-item" href="">Country</a>
+                    <a class="collapse-item" href="">State</a>
+                    <a class="collapse-item" href="">Department</a>
+                    <a class="collapse-item" href="">City</a>
                 </div>
             </div>
         </li>
-
         <!-- Divider -->
         <hr class="sidebar-divider">
 
-        <!-- Nav Item - Utilities Collapse Menu -->
+        <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser"
                aria-expanded="true" aria-controls="collapseUser">
-                <i class="fas fa-fw fa-wrench"></i>
-                <span>User Management</span>
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Users Management</span>
             </a>
-            <div id="collapseUser" class="collapse" aria-labelledby="headingUtilities"
-                 data-parent="#accordionSidebar">
+            <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Custom Utilities:</h6>
-                    <a class="collapse-item" href="utilities-color.html">User</a>
-                    <a class="collapse-item" href="utilities-border.html">Role</a>
-                    <a class="collapse-item" href="utilities-animation.html">Permission</a>
+                    <a class="collapse-item" href="">Users</a>
+                    <a class="collapse-item" href="cards.html">Role</a>
+                    <a class="collapse-item" href="cards.html">Permission</a>
                 </div>
             </div>
         </li>
@@ -103,22 +100,32 @@
                     <i class="fa fa-bars"></i>
                 </button>
 
+
+
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->username }}</span>
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->username }}</span>
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                             aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
+                                {{ __('Logout') }}
                             </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                         </div>
                     </li>
+
                 </ul>
 
             </nav>
@@ -126,17 +133,7 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                </div>
-                <div class="row">
-                    @yield('content')
-                </div>
-
-
-                </div>
+                @yield('content')
 
             </div>
             <!-- /.container-fluid -->
@@ -165,9 +162,11 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
+<!-- Bootstrap core JavaScript-->
 <script src="{{ mix('js/app.js') }}"></script>
 
-<script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+<!-- Custom scripts for all pages-->
+<script src="{{ asset('js/sb-admin.min.js') }}"></script>
 
 </body>
 
